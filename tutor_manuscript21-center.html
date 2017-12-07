@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+    
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <script src="sp1.js"></script>
+   <script src="sanscript/index.js"></script>
+   <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> -->
+   <meta charset="UTF-8">
+    
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SGS Tutor Application</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Fonts -->
+    <link href="assets/css/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+
+    <!-- Retina Images Plugin -->
+    <script src="assets/js/plugins/retina/retina.min.js"></script>
+
+    <!-- Plugin CSS -->
+    <link href="assets/css/plugins/hover/hover.min.css" rel="stylesheet">
+    <link href="assets/css/plugins/owl.carousel/owl.carousel.css" rel="stylesheet">
+    <link href="assets/css/plugins/owl.carousel/owl.theme.css" rel="stylesheet">
+    <link href="assets/css/plugins/owl.carousel/owl.transitions.css" rel="stylesheet">
+    <link href="assets/css/plugins/jquery.fs.wallpaper/jquery.fs.wallpaper.css" rel="stylesheet">
+    <link href="assets/css/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+    <!-- Spectrum CSS -->
+    <!-- Note: spectrum.css is the default blue theme. To use another theme, uncomment the one you want and delete the rest, including the default spectrum.css! -->
+<!--    <link href="assets/css/spectrum.css" rel="stylesheet">-->
+<!--     <link href="assets/css/spectrum-aqua.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-coffee.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-coral.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-lavender.css" rel="stylesheet"> -->
+     <link href="assets/css/spectrum-olive-center.css" rel="stylesheet"> 
+<!--     <link href="assets/css/spectrum-orange.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-peach.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-pink.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-purple.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-rust.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-seafoam.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-slate.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-turquoise.css" rel="stylesheet"> -->
+<!--     <link href="assets/css/spectrum-yellow.css" rel="stylesheet"> -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<!--<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">-->
+<body>
+<div id="wrapper">
+
+    
+        <nav class="navbar navbar-dark navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <span class="logo">
+                            <img src="assets/img/logo.jpg" size="large" width="50px" height="50px" alt="">
+                        </span>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                    <ul class="nav navbar-nav"> 
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                         <li class="page-scroll">
+                            <a href="#tutor">Tutorial</a>
+                        </li>
+                        <li class="page-scroll">
+                            <a href="#events">Help</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+    
+    
+<section id="tutorial" class="text-center" style="background: #ffffff">
+    <div class="container text-center">
+        <div class="row">
+            <div>
+                <h1><b>Tutorial Application</b></h1>
+                <hr class="primary">
+            </div>
+        </div>
+    </div>
+
+    <div class="container col-lg-12" style="background-image:url(assets/img/tutor/paper.png); background-repeat:no-repeat ;background-size:cover;width: 100%"  >
+        <div class="row text-center " >
+        <div > 
+            <br>
+            
+<!-- Tutor code start -->
+            
+         <audio id="my-audio"  type="audio/mp3" src="" ontimeupdate="tmUpdLsr(this)" onended="handleEndAudio(this)"></audio>
+	       <div id="non-audio-elms">
+           <select class="mainselection" id="langSel" onchange="langSel()"  style="width: 100px;height: 29px">
+			   <option value="devanagari">संस्कृतम्</option>
+			   <option value="iast">English</option>
+			   <option value="telugu">తెలుగు</option>
+			   <option value="kannada">ಕನ್ನಡ</option>
+			   <option value="malayalam">മലലയാളം</option>
+			   <option value="gujarati">ગુજરાતી</option>
+			</select>
+        
+			<select id="chapSel" onchange="chapSel()">
+			   <option value="">Choose Chapter</option>
+			   <option value="bg/dhyana">ध्यान श्लोकाः</option>
+			   <option value="bg/01">01 अर्जुनविषाद</option>
+			   <option value="bg/02">02 साङ्ख्य</option>
+			   <option value="bg/03">03 कर्म</option>
+			   <option value="bg/04">04 ज्ञानकर्मस्न्न्यास</option>
+			   <option value="bg/05">05 कर्मस्न्न्यास</option>
+			   <option value="bg/06">06 आत्मसंयम</option>
+			   <option value="bg/07">07 ज्ञानविज्ञान</option>
+			   <option value="bg/08">08 अक्षरब्रह्म</option>
+			   <option value="bg/09">09 राजविद्याराजगुह्य</option>
+			   <option value="bg/10">10 विभूति</option>
+			   <option value="bg/11">11 विश्वरूपदर्शन</option>
+			   <option value="bg/12">12 भक्ति</option>
+			   <option value="bg/13">13 क्षेत्रक्षेत्रज्ञविभाग</option>
+			   <option value="bg/14">14 गुणत्रयविभाग</option>
+			   <option value="bg/15">15 पुरुषोत्तम</option>
+			   <option value="bg/16">16 दैवासुरसम्पद्विभाग</option>
+			   <option value="bg/17">17 श्रद्धात्रयविभाग</option>
+			   <option value="bg/18">18 मोक्षसन्न्यास</option>
+			   <option value="bg/mahatmyam">गीतामाहात्म्यम्</option>
+			   <option value="bg/saaram">गीतासारम्</option>
+			</select>
+
+        <input id="tutorialMode" type="checkbox" />Tutorial Mode
+            <div id="errorMsg">
+
+            </div>
+    </div>
+
+<div id="shloka-displayWrapper" class="shloka-displayWrapper">
+    <div id="shloka-display" class="shloka-display">
+        <p>श्री गणेशाय नमः| श्री सरस्वत्त्यै नमः| </p>
+        <p>श्री पादवल्लभ नृसिंहसरस्वति श्री गुरुदत्तात्रेयाय नमः॥ </p>
+        <p>Welcome to Bhagavadgeeta Audio Tutorial!</p>
+    </div>
+</div>
+    <!-- Shloka content and positions to be generated at server side-->
+    <div id="shloka">
+          <!-- succeeding white space = swhtsp whitespaceword break(w), paada break(p), line break(l) -->
+    </div>
+
+<div class="audio-player">
+		    <a href="#" class="nl">
+                <img id="prev_btn" src="bg/icons/ic_skip_previous_white_24dp.png">
+		    </a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="nl">
+			     <img id="plays_btn" src="bg/icons/ic_play_circle_outline_white_24dp.png">
+			</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="nl">
+			     <img id="next_btn" src="bg/icons/ic_skip_next_white_24dp.png">
+			</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="nl">
+			     <img id="repeat_btn" src="bg/icons/ic_repeat_white_24dp.png">
+			</a>
+</div>
+<div class="shlokaMeaningWrapper">
+    <div id= "shlokaMeaning" class="shlokaMeaning">    </div>
+</div>            
+
+<!-- Tutor code end -->
+            
+</section>
+
+
+            
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            
+            
+            
+<footer class="footer-1">
+            <div class="lower">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                            <span class="small">Copyright &copy; 2017 - BhagavadGita Tutor. All Rights Reserved.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>    
+        </div>
+        
+
+    <!-- Core JavaScript Files -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/js/modernizr.custom.js"></script>
+
+    <!-- Plugin JavaScript Files -->
+    <script src="assets/js/plugins/jquery.easing/jquery.easing.1.3.js"></script>
+    <script src="assets/js/plugins/jquery.fitvids/jquery.fitvids.js"></script>
+    <script src="assets/js/plugins/jquery.fs.wallpaper/jquery.fs.wallpaper.min.js"></script>
+    <script src="assets/js/plugins/jquery.magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/plugins/jquery.tubular/jquery.tubular.1.0.js"></script>
+    <script src="assets/js/plugins/owl.carousel/owl.carousel.min.js"></script>
+    <script src="assets/js/plugins/scrollReveal/scrollReveal.js"></script>
+    <script src="assets/js/plugins/stellar/stellar.js"></script>
+    <script src="assets/js/plugins/SmoothScroll/SmoothScroll.js"></script>
+    <script src="assets/js/plugins/jqBootstrapValidation/jqBootstrapValidation.js"></script>
+    <script src="assets/js/contact_me.js"></script>
+    <script src="assets/js/plugins/isotope/isotope.pkgd.min.js"></script>
+
+    <!-- Spectrum JavaScript Files -->
+    <script src="assets/js/spectrum.nav.js"></script>
+    <script src="assets/js/spectrum.js"></script>
+</body>
+</html>

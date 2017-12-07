@@ -1,0 +1,15 @@
+.slider { margin: 20px; }
+.noUi-horizontal .noUi-handle-upper .noUi-tooltip {
+  top: -32px;
+  bottom: initial;
+}
+
+.noUi-marker {
+    background: #0e07f8;
+}
+
+.noUi-vertical {
+  width: 18px;
+  height: 60%;
+  margin-left: 77%;
+}

@@ -1,0 +1,145 @@
+img { 
+    display: inline-block;
+}
+
+.nl {
+    text-decoration:none;
+}
+
+.fh{
+	margin-left:3.5em !important;
+	font-weight: bold !important;
+}
+
+.sh{
+	margin-left:4em !important;
+	font-weight: bold !important;
+}
+
+.th{
+	margin-left:4.2em !important;
+	font-weight: bold !important;
+}
+
+.uh {
+	font-weight: bold !important;
+}
+
+.secButtonC{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background-color: transparent;
+  font-family : inherit;
+  font-size   : 20;
+  font-weight: normal;
+  cursor      : pointer;
+  color: red;
+}
+
+.secButton{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background-color: transparent;
+  font-family : inherit;
+  font-size   : 20;
+  font-weight: normal;
+  cursor      : pointer;
+}
+
+.secButton:hover{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+    
+  font-family : inherit;
+  font-size   : 20;
+  font-weight: normal;
+  cursor      : pointer;
+}
+
+.secButton-pressed{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+
+  font-family : inherit;
+  font-size   : 20;
+  font-weight: normal;
+  cursor      : pointer;
+}
+
+.errorMsg {
+    width: 350px;
+    border: 1px solid;
+    margin: 3px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    font-family : inherit;
+    font-size   : 18; 
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+.logMsg {
+    width: 758px;
+    height: 70px;
+    border: 1px solid;
+    padding:5px 1px 1px 1px;
+    font-family : inherit;
+    font-size   : 15; 
+    background-color: #e1e1e1;
+    text-align: center;
+    vertical-align: middle;
+    color:blue;
+    border-color: black;
+}
+
+.audio-player {
+    height: 50px;
+    width: 758px;
+    border: 1px solid;
+    padding:1px 1px 1px 1px;
+    font-family : inherit;
+    font-size   : 18; 
+    color: #9b9fa0;
+    background-color: #e1e1e1;
+    text-align: center;
+}
+
+.shloka-displayWrapper {
+    width: 650px;
+    height: 293px;
+    border: 0px solid;
+    margin: 3px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    font-family : inherit;
+    font-size   : 18; 
+    text-align: left;
+    padding-left: 100px;
+    overflow:hidden;
+    position:relative;
+}
+
+.shloka-display {
+    position:relative;
+}
+
+
+#non-audio-elms {
+    width: 760px;
+    height: 20px;
+    border: 1px solid;
+    margin: 3px 0px;
+    padding:8px 0px 8px 0px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    font-family : inherit;
+    font-size   : 18; 
+    background-color: #e1e1e1;
+    text-align: center;
+}

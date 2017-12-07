@@ -1,0 +1,52 @@
+.slider { margin: 20px; }
+.noUi-horizontal .noUi-handle-upper .noUi-tooltip {
+  top: -32px;
+  bottom: initial;
+}
+
+.noUi-marker {
+    background: #F5F5F5 !important;
+}
+
+.noUi-vertical {
+  width: 8px;
+  height: 89% !important;
+  margin-left: 97%;
+  top: 13px;
+  left: -5px;
+}
+
+.noUi-connect {
+	background:#F5F5F5;
+}
+
+.noUi-handle {
+    width: 16px !important;
+    height: 34px;
+    left: -5px;
+    top: -17px;
+	box-shadow: none !important;
+}
+
+.noUi-handle-lower , .noUi-handle:before, .noUi-handle:after{
+	content: none !important;
+}
+
+.noUi-tooltip {
+    font-size: 15px;
+	color: #2e6da4 !important;
+	left: -60px;
+}
+
+
+.noUi-target {
+	 background: #FAFAFA !important;
+}
+
+noUi-handle:focus {
+    outline: none !important;
+}
+
+*:focus {
+    outline: none;
+}

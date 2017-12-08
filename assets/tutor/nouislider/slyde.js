@@ -64,7 +64,7 @@ function createSlider(startNum, endNum) {
 
 	}, true);
 	
-	tooltipSlider.noUiSlider.on('change', function( values, handle ) {
+	tooltipSlider.noUiSlider.on('end', function( values, handle ) {
 	  var value = values[handle];
 	  if ( handle ) {
 		  _sliderEndPos = value;
@@ -89,7 +89,7 @@ function gotoShloka(sliderStartPos, sliderEndPos, _isTop) {
 	// set lower value for shloka range
 	//console.log("GOTO Sloka: " + sliderStartPos + " (& _sliderEndPos = " + sliderEndPos + ")");
 	
-	sliderPlayRangePl(Math.min(sliderStartPos, sliderEndPos), Math.max(sliderStartPos, sliderEndPos), _isTop);
+	sliderPlayRange(Math.min(sliderStartPos, sliderEndPos), Math.max(sliderStartPos, sliderEndPos), _isTop);
 } 
 
 function getSliderMin() {

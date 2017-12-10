@@ -1500,7 +1500,7 @@
 					if (_teacher)
 						mediaElement.currentTime = _nextStTm;
 					if (_student)
-						mediaElement.currentTime = (_nextStTm - 0.3000);
+						mediaElement.currentTime = (_nextStTm - 0.1000);
 				}
 			}
 			getShlokaStartTmAndWrdCntTu(_shlokaCntr);

@@ -1,4 +1,3 @@
-
 	//////////////////////////////////////////////////////////////
 	// GLOBAL VARIABLES
 	//////////////////////////////////////////////////////////////
@@ -27,7 +26,7 @@
 	//var _entireChapterDataMng = "";
 	var _numShlokasInChap = 0;
 	var _lastKnownRepeatStatus = _repeatStatus;
-	var _nbrOfLines = 5;
+	var _nbrOfLines = 3;
 
 	var _stLn = 0;
 	var _endLn = _stLn + _nbrOfLines;
@@ -64,8 +63,8 @@
 	var _currPlayShlokaEndTime = 0;
 	var _currPlayShlokaStartTime = 0;
 
-	var _currPlayShlokaEndTimeStu = 0;
-	var _currPlayShlokaStartTimeStu = 0;
+	//var _currPlayShlokaEndTimeStu = 0;
+	//var _currPlayShlokaStartTimeStu = 0;
 
 	var _modeChanged = false;
 	var _pagePlayLine = 0;
@@ -84,9 +83,10 @@
 
 	var _curTime = 0;
 	var _tutorJSONFileName = "tutor_chapter.json";
-	var _tutorMP3FileName = "tutor_chapter.mp3";
+	var _tutorMP3FileName = "tutor_chapter";
 	var _plainJSONFileName = "plain_chapter.json";
-	var _plainMP3FileName = "plain_chapter.mp3";
+	var _plainMP3FileName = "plain_chapter";
+    var _fileExt = "";
 	var _tutorFile = false;
 	var _tutotJSONFile = false;
 	var _tutorMP3File = false;
@@ -94,10 +94,10 @@
 	var _sliderStartingtPos = 0;
 	var _sliderEndingPos = 0;
 
-	var _tmpPosForwardPl = 81;
-	var _tmpPosFwdUvaPl = 36;
-	var _tmpPosForwardTu = 81;
-	var _tmpPosFwdUvaTu = 36;
+	var _tmpPosForwardPl = 65;
+	var _tmpPosFwdUvaPl = 38;
+	var _tmpPosForwardTu = 65;
+	var _tmpPosFwdUvaTu = 38;
 	var _sliderDiff = 0;
 
 	var _sliderSpeedDef = 300;
@@ -110,11 +110,66 @@
 	var _defaultText = "";
 	var _selectedChapter = "";
 
+    var _whichBrowser = "";
+	var _isWindows = true;
+
+	var _AUTO = "AUTO";
+	var _MANUAL = "MANUAL";
+	var _currSliderMove = "";
+
 	//////////////////////////////////////////////////////////////
 	// code begin
 	//////////////////////////////////////////////////////////////
 	$(document).ready(init);
 
+
+    function browserCheck() { 
+         if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
+        {
+            _whichBrowser = "Opera";
+        }
+        else if(!!window.chrome && !!window.chrome.webstore)
+        {
+            _whichBrowser = "Chrome";
+        }
+        else if(/constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification)))
+        {
+            _whichBrowser = "Safari";
+        }
+        else if(typeof InstallTrigger !== 'undefined') 
+        {
+             _whichBrowser = "Firefox";
+        }
+        else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true ) || ( (navigator.appName == "Netscape") && 
+        (navigator.appVersion.indexOf('Trident') === -1))) //IF IE > 10
+        {
+            _whichBrowser = "IE";
+        }  
+        else 
+        {
+           
+        }
+    }
+	
+	function isWindows() {
+	  _isWindows = navigator.platform.indexOf('Win') > -1
+	}
+
+	function isIOS() {
+	  if (/iP(hone|od|ad)/.test(navigator.platform)) {
+		// supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
+		//var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+		//return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+		  return true;
+	  } 
+	return false;
+	}
+
+	function isAndroid() {
+		ua = navigator.userAgent.toLowerCase(); 
+		var match = ua.match(/android\s([0-9\.]*)/);
+		return match ? true : false;
+	}
 
 	function resetSpeed() {
 		if ($("#playSpeed").length > 0)
@@ -150,6 +205,20 @@
 		}
 		$("h3").attr('style', txt);
 		$(".navbar-brand").attr('style', txt2);
+		
+        isWindows();
+        browserCheck();
+        if(_whichBrowser == "Firefox") {
+            _fileExt = ".ogg";
+        } else if(_whichBrowser == "IE") {
+            _fileExt = ".mp3";  
+        } else {
+            _fileExt = ".m4a";
+        }
+		if(isIOS() || isAndroid()) {
+			_fileExt = ".m4a";
+		}
+		_tutorialMode = $("#tutorialMode").prop('checked') ;
 	}
 
 	$(window).resize(function() {
@@ -164,16 +233,17 @@
         if(scrWd < 321)
             txt = 'width: 30px; height: 30px;'
         $(".logo img").attr('style', txt);
-		
-		if(scrWd > 768) {
-			txt = 'margin-top: 23px !important; margin-bottom: 3px !important;'    
-			txt2 = "padding: 10px 1px !important";
-		} else {
-			txt = 'margin-top: 9px !important; margin-bottom: -4px !important;'   
-			txt2 = "padding: 1px 1px !important;";
+		if(!_isWindows) {
+			if(scrWd > 768) {
+				txt = 'margin-top: 23px !important; margin-bottom: 3px !important;'    
+				txt2 = "padding: 10px 1px !important";
+			} else {
+				txt = 'margin-top: 9px !important; margin-bottom: -4px !important;'   
+				txt2 = "padding: 1px 1px !important;";
+			}
+			$("h3").attr('style', txt);
+			$(".navbar-brand").attr('style', txt2);
 		}
-		$("h3").attr('style', txt);
-		$(".navbar-brand").attr('style', txt2);
     });
 
 	function langSel(lang, langTy) {
@@ -189,6 +259,9 @@
 		if (_prevLang == _lang) return;
 
 		var secBtnArr = document.getElementsByClassName("secButton");
+		if (secBtnArr.length == 0) {
+			secBtnArr = document.getElementsByClassName("secButtonMobile");
+		}
 		for (i = 0; i < secBtnArr.length; i++) {
 			var txt = Sanscript.t(secBtnArr[i].innerHTML, _prevLang, _lang);
 			secBtnArr[i].innerHTML = txt;
@@ -197,6 +270,46 @@
 	}
 
 
+function adjTextforMobile() {
+	var scrWd = $(window).width();
+	var txt2 = "";
+	
+	if(scrWd < 517) {	
+			txt2 = "font-size   : 14px !important; ";
+			$(".shloka-displayWrapper").attr('style', txt2);
+			$(".secButton").attr('style', txt2);
+			$(".secButton:hover").attr('style', txt2);
+			$(".secButton-pressed").attr('style', txt2);
+
+			txt2 = "line-height: 15px !important;";
+			$("button").attr('style', txt2);
+			$("input").attr('style', txt2);
+			$("select").attr('style', txt2);
+			$("textarea").attr('style', txt2);
+			$("p").attr('style', txt2);
+			
+			txt2 = "margin: 0 0 10px !important;";
+			$("p").attr('style', txt2);	
+			$("body").attr('style', txt2);
+		} else {
+			txt2 = "font-size   : 18px !important; ";
+			$(".shloka-displayWrapper").attr('style', txt2);
+			$(".secButton").attr('style', txt2);
+			$(".secButton:hover").attr('style', txt2);
+			$(".secButton-pressed").attr('style', txt2);
+
+			txt2 = "line-height: 25px !important;";
+			$("button").attr('style', txt2);
+			$("input").attr('style', txt2);
+			$("select").attr('style', txt2);
+			$("textarea").attr('style', txt2);
+			$("p").attr('style', txt2);	
+			
+			txt2 = "margin: 0 0 20px !important;";
+			$("p").attr('style', txt2);	
+			$("body").attr('style', txt2);	
+		}
+}
 
 	function changeChapterDrop() {
 		/*
@@ -204,7 +317,7 @@
 					   "08 अक्षरब्रह्म योगः|09 राजविद्याराजगुह्य योगः|10 विभूति योगः|11 विश्वरूपदर्शन योगः|12 भक्ति योगः|13 क्षेत्रक्षेत्रज्ञविभाग योगः|14 गुणत्रयविभाग योगः|" +
 					   "15 पुरुषोत्तम योगः|16 दैवासुरसम्पद्विभाग योगः|17 श्रद्धात्रयविभाग योगः|18 मोक्षसन्न्यास|गीतामाहात्म्यम्|गीतासारम्").split("|");
 		*/
-		var textArr  = ("08 अक्षरपरब्रह्म योगः|12 भक्ति योगः").split("|");
+		var textArr  = ("01 अर्जुनविषाद योगः|02 साङ्ख्य योगः|03 कर्म योगः|04 ज्ञान योगः|05 कर्मसन्न्यास योगः|06 आत्मसंयम योगः").split("|");
 		
 
 		if (_lang != 'devanagari') {
@@ -252,14 +365,14 @@
 		//parseShlokaFromJSONFileMng("./" + selChap + "/meaning.json");
 
 		if (_selectedChapter != _empty) {
-			_mediaElementRef.type = "audio/mpeg";
+			//_mediaElementRef.type = "audio/mpeg";
 			if (_tutorialMode) {
 				_tutorFile = true;
 				parseShlokaFromJSONFile("./" + _selectedChapter + "/" + _tutorJSONFileName);
-				_mediaElementRef.src = "./" + _selectedChapter + "/" + _tutorMP3FileName;
+				_mediaElementRef.src = "./" + _selectedChapter + "/" + _tutorMP3FileName + _fileExt;
 			} else {
 				parseShlokaFromJSONFile("./" + _selectedChapter + "/" + _plainJSONFileName);
-				_mediaElementRef.src = "./" + _selectedChapter + "/" + _plainMP3FileName;
+				_mediaElementRef.src = "./" + _selectedChapter + "/" + _plainMP3FileName + _fileExt;
 			}
 			_sliderStartPos = 0;
 			_sliderEndPos = 0;
@@ -275,8 +388,8 @@
 			showPause();
 			_mediaElementRef.play();
 			resetSpeed();
-			$('#stLine').prop('disabled', false);
-         	$('#endLine').prop('disabled', false);
+			//$('#stLine').prop('disabled', false);
+         	//$('#endLine').prop('disabled', false);
 		} else {
 			$(".shloka-display").html(_defaultText);
 			_mediaElementRef.pause();
@@ -361,6 +474,7 @@
 			var txt = Sanscript.t(secBtnArr[i].innerHTML, "devanagari", _lang);
 			secBtnArr[i].innerHTML = txt;
 		}
+		
 	}
 
 
@@ -369,7 +483,7 @@
 	//////////////////////////////////////////////////////////////
 	function setSlider(numShlokas) {
 		if (numShlokas > 0) {
-			createSlider(0, numShlokas);
+			createSlider(0, numShlokas-1);
 		} else {
 			hideSlider();
 		}
@@ -593,12 +707,13 @@
 	}
 
 	function sliderPlayRange(slSt, slEnd, isT) {
-		console.log("start: " + slSt + " | end: " + slEnd + " | _slSt: " + _sliderStartPos + " | _slEnd: " + _sliderEndPos + " | _slSt: " + _sliderStartingtPos + " | _slEnd: " + _sliderEndingPos);
+		_currSliderMove = _MANUAL;
+		console.log("slSt: " + slSt + " | slEnd: " + slEnd + " | _sliderStartPos: " + _sliderStartPos + " | _sliderEndPos: " + _sliderEndPos + " | _sliderStartingtPos: " + _sliderStartingtPos + " | _sliderEndingPos: " + _sliderEndingPos);
 
 		if (_tutorFile)
 			sliderPlayRangeTu(slSt, slEnd, isT);
 		else
-			sliderPlayRangePl(slSt, slEnd, isT);
+			sliderPlayRangePlNew(slSt, slEnd, isT);
 	}
 
 	function tmUpdLsr(mediaElement) {
@@ -624,6 +739,36 @@
 
 
 
+	function scrollDisplayPl(autoT, slPos, speed, uvaCnt, whr) {
+		if(_sliderStartPos == 0) {
+		   	$('.shloka-display').css({
+				marginTop: ""
+			});
+			console.log("Pointer Starting ...");
+			return true;
+		}
+		if (autoT) {
+			_screenSize = _tmpPosForwardPl;
+			if($(window).width() < 768) {
+				//_screenSize = _tmpPosForwardPl * .8;
+			}
+			if($(window).width() < 321) {
+				_screenSize = _tmpPosForwardPl * .9;
+			}
+			slPos = _screenSize * +slPos;
+			if (+slPos < 0) {
+				uvaCnt = uvaCnt * -1;
+			}
+			if (uvaCnt != 0) {
+				slPos = slPos + (uvaCnt * _tmpPosFwdUvaPl * .7);
+			}
+
+			$('.shloka-display').animate({
+				'marginTop': '-=' + slPos
+			}, speed);
+		}
+		console.log('scrolling: ' + slPos + " | whr: " + whr);
+	}
 
 
 
@@ -634,13 +779,66 @@
 
 	var _uvachaCount = 0;
 
+	function sliderPlayRangePlNew(slSt, slEnd, isT) {
+		var mm = false;		
+		var stPos;
+		var endPos;
+		
+		if ((slSt == _sliderStartingtPos) && (slEnd == _sliderEndingPos) || (slSt == slEnd && (slSt -_sliderStartingtPos == 1))) {
+			return false;
+		}
+		_mediaElementRef.pause();
+		_sliderDiff = slSt - _playLine;
+		_sliderStartingtPos = slSt;
+		_sliderEndingPos = slEnd;
+		
+		for (i = slSt; i <= slEnd; i++) {
+			var shl = _entireChapterData.shloka[i];
+			var numEntries = shl.entry.length;
+
+			if (i == slSt) {
+				stPos = +shl.entry[0].startTime;
+			}
+			if (i == slEnd) {
+				endPos = +shl.entry[numEntries - 1].endTime;
+			}
+		}
+
+		if (stPos != _startPos) {
+			_startPos = stPos;
+			_mediaElementRef.currentTime = _startPos;
+			_mediaElementRef.play();
+			_curTime = _startPos;
+			if (slSt > _sliderStartingtPos)
+				_uvachaCount = getUvachaCountPl(+_sliderStartingtPos, +slSt);
+			else
+				_uvachaCount = getUvachaCountPl(+slSt, +_sliderStartingtPos);
+		} else {
+			_mediaElementRef.play();
+		}
+		
+		if (endPos != _endPos) {
+			_endPos = endPos;
+		}
+		
+		scrollDisplayPl(true, _sliderDiff, _sliderSpeed, _uvachaCount, _MANUAL);
+		
+		_sliderMove = isT;
+		if(_sliderMove){
+			_scrollText = false;
+		}
+		
+		$('#stLine').attr('value', _sliderStartingtPos);
+        $('#endLine').attr('value', _sliderEndingPos);
+	}
+
 	function sliderPlayRangePl(slSt, slEnd, isT) {
 		var mm = false;
-		if ((slSt == _sliderStartingtPos) && (slEnd == _sliderEndingPos)) {
+		if ((slSt == _sliderStartingtPos) && (slEnd == _sliderEndingPos) || (slSt == slEnd && (slSt -_sliderStartingtPos == 1))) {
 			return false;
 		}
 
-		if (slSt == _numShlokasInChap) {
+		if (slSt == _numShlokasInChap-1) {
 			slSt = slSt - 1;
 			mm = true;
 		}
@@ -651,10 +849,6 @@
 			slEnd = slEnd + 1;
 		}
 		_stLn = +slSt;
-		//		if (_playLine < _stLn) { // || _currentIndex > _lastSlokaIndex2Render) should not happen
-		//			_playLine = +slSt-1;
-		//		}
-		_lastSlokaIndex2Render = +slEnd - 1;
 		_endLn = _stLn + _nbrOfLines;
 
 		if (slEnd < _endLn) {
@@ -664,17 +858,17 @@
 		if (_endLn == _numShlokasInChap) {
 			_endLn = _endLn - 1;
 		}
-
-		for (i = slSt; i < slEnd; i++) {
+		var stPos;
+		var endPos;
+		
+		for (i = slSt; i <= slEnd; i++) {
 			var shl = _entireChapterData.shloka[i];
 			var numEntries = shl.entry.length;
-			var stPos;
-			var endPos;
 
 			if (i == slSt) {
 				stPos = +shl.entry[0].startTime;
 			}
-			if (i == (+slEnd - 1)) {
+			if (i == +slEnd) {
 				endPos = +shl.entry[numEntries - 1].endTime;
 			}
 		}
@@ -684,27 +878,28 @@
 		if (stPos != _startPos) {
 			_startPos = stPos;
 			_mediaElementRef.currentTime = _startPos;
+			_mediaElementRef.play();
 			_curTime = _startPos;
 			if (slSt > _sliderStartingtPos)
-				_uvachaCount = getUvachaCount(+_sliderStartingtPos, +slSt);
+				_uvachaCount = getUvachaCountPl(+_sliderStartingtPos, +slSt);
 			else
-				_uvachaCount = getUvachaCount(+slSt, +_sliderStartingtPos);
+				_uvachaCount = getUvachaCountPl(+slSt, +_sliderStartingtPos);
 		}
-
-
+		
 		_sliderDiff = slSt - _sliderStartingtPos;
+		//_sliderDiff = slSt - _sliderStartPos;
 
-		if ((+slSt + +_nbrOfLines) > _numShlokasInChap) {
-			var b = (+slSt + +_nbrOfLines) - _numShlokasInChap;
-			_sliderDiff = _sliderDiff - b;
-		}
+//		if ((+slSt + +_nbrOfLines) > _numShlokasInChap) {
+//			var b = (+slSt + +_nbrOfLines) - _numShlokasInChap;
+//			_sliderDiff = _sliderDiff - b;
+//		}
 
-		if ((+slEnd + +slSt) == _numShlokasInChap) {
-			_sliderDiff = (+slSt + +_nbrOfLines) - _numShlokasInChap;
+		if ((+slEnd + +slSt) == (_numShlokasInChap-1)) {
+			_sliderDiff = (+slSt + +_nbrOfLines) - (_numShlokasInChap-1);
 		}
 
 		if (isT || slEnd <= _endLn) {
-			scrollDisplayPl(true, _sliderDiff, _sliderSpeed, _uvachaCount, "SLIEDR");
+			scrollDisplayPl(true, _sliderDiff, _sliderSpeed, _uvachaCount, _MANUAL);
 		}
 
 		if (slSt == 0) {
@@ -718,11 +913,12 @@
 		}
 		_sliderEndingPos = slEnd;
 
-		_mediaElementRef.play();
+		
 
 		_sliderMove = isT;
-		if(_sliderMove)
+		if(_sliderMove){
 			_scrollText = false;
+		}
 		
 		$('#stLine').attr('value', _sliderStartingtPos);
         $('#endLine').attr('value', _sliderEndingPos);
@@ -740,7 +936,7 @@
 		}
 	}
 	
-	function getUvachaCount(st, en) {
+	function getUvachaCountPl(st, en) {
 		_uvachaCount = 0;
 		for (i = st; i < en; i++) {
 			var shl = _entireChapterData.shloka[i];
@@ -775,7 +971,7 @@
 				_currPlayShlokaEndTime = endTm;
 				_currPlayShlokaStartTime = stTm;
 				if (_prevPlayLine != _playLine) {
-					if (getUvachaCount(_prevPlayLine, _playLine) > 0) {
+					if (getUvachaCountPl(_prevPlayLine, _playLine) > 0) {
 						_uvacha = true;
 					} else {
 						_uvacha = false;
@@ -823,7 +1019,7 @@
 			_endLn = _numShlokasInChap;
 		}
 		removeNonTextFromSecRefsPl();
-		displayShlokaInitial();
+		displayShlokaInitialPl();
 		populateSecnsRefsPl();
 		_prevHighlightedSec = -1;
 		refreshShlokas();
@@ -881,14 +1077,14 @@
 	// highlightCurSec(sec)
 	//////////////////////////////////////////////////////////////
 	function highlightCurSecPl(sec) {
-		if (!_oneLine) {
+		//if (!_oneLine) {
 			if (_prevHighlightedSec == sec) {
 				return;
 			} else {
 				unhighlightPrevSecPl(_prevHighlightedSec);
 				_prevHighlightedSec = sec;
 			}
-		}
+		//}
 		var secObj = _secRefArr[sec];
 
 		if (_teacher)
@@ -938,11 +1134,60 @@
 	//////////////////////////////////////////////////////////////
 	// displayShlokaInitial()
 	//////////////////////////////////////////////////////////////
-	function displayShlokaInitial() {
-		displayShlokaInitialPP();
+	function displayShlokaInitialPl() {
+		var scrWd = $(window).width();
+	
+		if(scrWd < 518) {
+			_tmpPosForwardPl = _tmpPosForwardPl * 1.1;
+			_tmpPosFwdUvaPl = _tmpPosFwdUvaPl * .8;
+			
+			displayShlokaInitialPPPlMobile();
+		}	else {
+			displayShlokaInitialPPPl();
+		}
 	}
 
-	function displayShlokaInitialPP() {
+	function displayShlokaInitialPPPlMobile() {
+		
+		var bigStr = "<p>";
+		var secId = 0;
+		for (i = 0; i < _secDtlsArrDisplay.length; i++) {
+			var secDtls = _secDtlsArrDisplay[i];
+			var sty = secDtls.sty;
+			if ($.trim(secDtls.startTime) == "") {
+				bigStr += "<span>";
+				bigStr += secDtls.text;
+				bigStr += "</span>";
+			} else {
+				bigStr += "<button class=\"secButtonMobile " + sty + "\" id=\"" + secId + "\" onclick=\"secBtnPressed('" + secId + "', '" + i + "')\">";
+				bigStr += secDtls.text;
+				bigStr += "</button> &nbsp;"
+				secId++;
+			}
+
+			var whtsp = secDtls.swhtsp;
+			switch (whtsp) {
+				case "w":
+					bigStr += "&nbsp;";
+					break;
+				case "p":
+					bigStr += "&nbsp;&nbsp;&nbsp;";
+					break;
+				case "l":
+					bigStr += "<br>";
+					break;
+				case "":
+					bigStr += "<p>";
+					break;
+				default:
+					break;
+			}
+			document.getElementById("shloka-display").innerHTML = bigStr;
+		}
+		
+	}
+	function displayShlokaInitialPPPl() {
+		
 		var bigStr = "<p>";
 		var secId = 0;
 		for (i = 0; i < _secDtlsArrDisplay.length; i++) {
@@ -978,6 +1223,7 @@
 			}
 			document.getElementById("shloka-display").innerHTML = bigStr;
 		}
+		
 	}
 
 
@@ -1002,8 +1248,12 @@
 			mediaElement.currentTime = _startPos;
 			_stLn = _sliderStartingtPos;
 			_endLn = +_stLn + +_nbrOfLines;
-			scrollDisplayPl(true, ((_sliderStartingtPos - _sliderEndingPos) + (_nbrOfLines - 3)), _sliderSpeed, getUvachaCount(+_sliderStartingtPos, +_sliderEndingPos), "TMP");
-			_sliderMove = false;
+			scrollDisplayPl(true, ((_sliderStartingtPos - _sliderEndingPos) + (_nbrOfLines - 3)), _sliderSpeed, getUvachaCountPl(+_sliderStartingtPos, +_sliderEndingPos), _AUTO);
+			_currSliderMove = _AUTO;
+			if(_sliderEndingPos == _numShlokasInChap)
+				_sliderMove = false;
+			else 
+				_sliderMove = true;
 			_scrollText = false;
 			console.log("Reset to start...");
 		}
@@ -1015,6 +1265,7 @@
 				_scrollText = true;
 				_sliderMove = false;
 			}
+			_sliderMove = false;
 		}
 
 		if (_scrollText && (_endLn - 2) <= _numShlokasInChap) {
@@ -1025,7 +1276,8 @@
 			else
 				cnt = 0;
 
-			scrollDisplayPl(true, 1, _sliderSpeedDef, cnt, "TMP");
+			scrollDisplayPl(true, 1, _sliderSpeedDef, cnt, _AUTO);
+			_currSliderMove = _AUTO;
 			_scrollText = false;
 		}
 	}
@@ -1039,36 +1291,7 @@
 	}
 
 
-	function scrollDisplayPl(autoT, slPos, speed, uvaCnt, whr) {
-		if(_sliderStartPos == 0) {
-		   	$('.shloka-display').css({
-				marginTop: ""
-			});
-			console.log("Pointer Starting ...");
-			return true;
-		}
-		if (autoT) {
-			_screenSize = _tmpPosForwardPl;
-			if($(window).width() < 768) {
-				_screenSize = _tmpPosForwardPl * .8;
-			}
-			if($(window).width() < 321) {
-				_screenSize = _tmpPosForwardPl * .9;
-			}
-			slPos = _screenSize * +slPos;
-			if (+slPos < 0) {
-				uvaCnt = uvaCnt * -1;
-			}
-			if (uvaCnt != 0) {
-				slPos = slPos + (uvaCnt * _tmpPosFwdUvaPl * .7);
-			}
-			$('.shloka-display').animate({
-				'marginTop': '-=' + slPos
-			}, speed);
-		}
-		console.log('slPosPl: ' + slPos + " | whr: " + whr);
-	}
-
+	
 
 
 
@@ -1103,14 +1326,19 @@
 	function sliderPlayRangeTu(slSt, slEnd, isTop) {
 		_shlokaCntr = slSt;
 		_shlokaLine = 0;
+		_teacher = true;
 		getShlokaStartTmAndWrdCntTu(_shlokaCntr);
 		_mediaElementRef.currentTime = _currStTm;
+		_mediaElementRef.play();
 		_sliderDiff = slSt - _sliderStartingtPos;
 
 		scrollDisplayTu(true, _sliderDiff, _sliderSpeed, 0);
 
 		_sliderStartingtPos = _playLine = slSt;
 		_sliderEndingPos = slEnd;
+		
+		$('#stLine').attr('value', _sliderStartingtPos);
+        $('#endLine').attr('value', _sliderEndingPos);
 	}
 
 	function getUvachaCountTu(st, en) {
@@ -1138,12 +1366,12 @@
 			return true;
 		}
 		if (autoT) {
-			_screenSize = _tmpPosForwardPl;
+			_screenSize = _tmpPosForwardTu;
 			if($(window).width() < 768) {
-				_screenSize = _tmpPosForwardPl * .8;
+				//_screenSize = _tmpPosForwardTu * .8;
 			}
 			if($(window).width() < 321) {
-				_screenSize = _tmpPosForwardPl * .9;
+				_screenSize = _tmpPosForwardTu * .9;
 			}
 			slPos = _screenSize * +slPos;
 			if (+slPos < 0) {
@@ -1212,7 +1440,17 @@
 	// displayShlokaInitialTu()
 	//////////////////////////////////////////////////////////////
 	function displayShlokaInitialTu() {
-		displayShlokaInitialPPTu();
+		var scrWd = $(window).width();
+	
+		if(scrWd < 518) { 
+			_tmpPosForwardTu = _tmpPosForwardTu * 1.1;
+			_tmpPosFwdUvaTu = _tmpPosFwdUvaTu * .8;
+			
+			displayShlokaInitialPPTuMobile();
+		} else {
+			displayShlokaInitialPPTu();
+		}
+			
 	}
 
 	function displayShlokaInitialPPTu() {
@@ -1255,7 +1493,45 @@
 		}
 	}
 
+	function displayShlokaInitialPPTuMobile() {
+		var bigStr = "<p>";
+		var secId = 0;
 
+		for (i = 0; i < _secDtlsArrDisplay.length; i++) {
+			var secDtls = _secDtlsArrDisplay[i];
+			var sty = secDtls.sty;
+
+			if ($.trim(secDtls.startTime) == "") {
+				bigStr += "<span>";
+				bigStr += secDtls.text;
+				bigStr += "</span>";
+			} else {
+				bigStr += "<button class=\"secButtonMobile " + sty + "\" id=\"" + secId + "\" onclick=\"secBtnPressedTu('" + secId + "', '" + i + "')\">";
+				bigStr += secDtls.text;
+				bigStr += "</button> &nbsp;"
+				secId++;
+			}
+
+			var whtsp = secDtls.swhtsp;
+			switch (whtsp) {
+				case "w":
+					bigStr += "&nbsp;";
+					break;
+				case "p":
+					bigStr += "&nbsp;&nbsp;&nbsp;";
+					break;
+				case "l":
+					bigStr += "<br>";
+					break;
+				case "":
+					bigStr += "<p>";
+					break;
+				default:
+					break;
+			}
+			document.getElementById("shloka-display").innerHTML = bigStr;
+		}
+	}
 	//////////////////////////////////////////////////////////////
 	// secBtnPressed()
 	// - If any section is chosen
@@ -1339,7 +1615,7 @@
 		var sec = 0;
 		var secFound = false;
 
-		for (sec = 0; sec < _wordCnt; sec++) {
+		for (sec = _startWordPos; sec < _wordCnt; sec++) {
 			if (txt == _secDtlsArrDisplay[sec].text) {
 				secFound = true;
 				break;
@@ -1358,14 +1634,14 @@
 	// highlightCurSec(sec)
 	//////////////////////////////////////////////////////////////
 	function highlightCurSecTu(sec) {
-		if (!_oneLine) {
+		//if (!_oneLine) {
 			if (_teacher && _prevHighlightedSec == sec) {
 				return;
 			} else {
 				unhighlightPrevSecTu(_prevHighlightedSec);
 				_prevHighlightedSec = sec;
 			}
-		}
+		//}
 		var secObj = _secRefArr[sec];
 		if (secObj != null) {
 			if (_teacher)
@@ -1410,9 +1686,22 @@
 		}
 	}
 
+    function getWordCntTu(liNbr) {
+        _startWordPos = 0;
+        for(i=0; i<+liNbr; i++) {
+            shl = _entireChapterData.shloka[i];
+            numEntries = shl.entry.length;
+            for (j = 0; j < numEntries; j++) {
+                if(shl.entry[j].teacher == "YS")  {
+                   _startWordPos++; 
+                }
+            }
+        }
+    }
 
 	function getShlokaStartTmAndWrdCntTu(lineNumber) {
 		if (lineNumber != _sliderEndPos) {
+            getWordCntTu(lineNumber);
 			shl = _entireChapterData.shloka[lineNumber];
 			numEntries = shl.entry.length;
 
@@ -1493,6 +1782,7 @@
 				updateSlider(_shlokaCntr, _sliderEndPos);
 				if ((_shlokaCntr + 1) < _sliderEndPos) {
 					scrollDisplayTu(true, 1, _sliderSpeedDef, getUvachaCountTu(_shlokaCntr - 1, _shlokaCntr));
+					_currSliderMove = _AUTO;
 				}
 			} else {
 				_shlokaLine++;
@@ -1511,6 +1801,7 @@
 		if (_shlokaCntr == _sliderEndingPos && _sliderStartingtPos != _sliderEndingPos) {
 			//			sliderPlayRangeTu(_sliderStartingtPos, _sliderEndingPos, false);
 			scrollDisplayTu(true, ((_sliderStartingtPos - _sliderEndingPos) + (_nbrOfLines - 3)), _sliderSpeed, getUvachaCountTu(+_sliderStartingtPos, +_sliderEndingPos));
+			_currSliderMove = _AUTO;
 			console.log("Tu Reset to start...");
 			_shlokaLine = 0;
 			_shlokaCntr = _sliderStartingtPos;

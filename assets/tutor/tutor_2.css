@@ -136,17 +136,6 @@ img {
     text-decoration:none;
 }
 
-.secButtonC{
-  margin      : 0;
-  padding     : 0;
-  border      : 0;
-  background-color: transparent;
-  font-family : inherit;
-  font-size   : 23px !important; 
-  font-weight: normal;
-  cursor      : pointer;
-  color: red;
-}
 
 .secButton{
   margin      : 0;
@@ -154,7 +143,7 @@ img {
   border      : 0;
   background-color: transparent;
   font-family : inherit;
-  font-size   : 23px !important; 
+  font-size   : 18px !important; 
   font-weight: normal;
   cursor      : pointer;
 }
@@ -165,7 +154,7 @@ img {
   border      : 0;
     
   font-family : inherit;
-  font-size   : 23px !important; 
+  font-size   : 18px !important; 
   font-weight: normal;
   cursor      : pointer;
 }
@@ -176,9 +165,46 @@ img {
   border      : 0;
 
   font-family : inherit;
-  font-size   : 23px !important; 
+  font-size   : 18px !important; 
   font-weight: normal;
   cursor      : pointer;
+}
+
+
+.secButtonMobile{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+  background-color: transparent;
+  font-family : inherit;
+  font-size   : 14px !important; 
+  font-weight: normal;
+  cursor      : pointer;
+
+}
+
+.secButtonMobile:hover{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+    
+  font-family : inherit;
+  font-size   : 14px !important; 
+  font-weight: normal;
+  cursor      : pointer;
+
+}
+
+.secButton-pressedMobile{
+  margin      : 0;
+  padding     : 0;
+  border      : 0;
+
+  font-family : inherit;
+  font-size   : 14px !important; 
+  font-weight: normal;
+  cursor      : pointer;
+
 }
 
 .errorMsg {
@@ -229,7 +255,7 @@ img {
 	border-top: 1px solid;
     border-color: #F5F5F5;
     font-family : inherit;
-    font-size   : 23px !important; 
+    font-size   : 18px !important; 
     text-align:justify;
     padding-left: 1px !important;
 	overflow:hidden;
@@ -399,7 +425,7 @@ input[type=number] {
 }
 
 body, p {
-	margin: 0 0 25px !important;
+	margin: 0 0 20px !important;
 	
 }
 

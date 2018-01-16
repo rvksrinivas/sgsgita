@@ -74,7 +74,7 @@
                 consonants: 'क ख ग घ ङ च छ ज झ ञ ट ठ ड ढ ण त थ द ध न प फ ब भ म य र ल व श ष स ह ळ क्ष ज्ञ'.split(' '),
 
                 // Numbers and punctuation
-                symbols: '० १ २ ३ ४ ५ ६ ७ ८ ९ ॐ ऽ । ॥'.split(' '),
+                symbols: '0 1 2 3 4 5 6 7 8 9 ॐ ऽ । ॥'.split(' '),
 
                 // Zero-width joiner. This is used to separate a consonant cluster
                 // and avoid a complex ligature.
@@ -206,7 +206,7 @@
                 other_marks: 'ం ః ఁ'.split(' '),
                 virama: ['్'],
                 consonants: 'క ఖ గ ఘ ఙ చ ఛ జ ఝ ఞ ట ఠ డ ఢ ణ త థ ద ధ న ప ఫ బ భ మ య ర ల వ శ ష స హ ళ క్ష జ్ఞ'.split(' '),
-                symbols: '౦ ౧ ౨ ౩ ౪ ౫ ౬ ౭ ౮ ౯ ఓం ఽ । ॥'.split(' '),
+                symbols: '0 1 2 3 4 5 6 7 8 9 ఓం ఽ । ॥'.split(' '),
                 other: '        ఱ'.split(' '),
                 accent: ["", ""],
                 combo_accent: ["", "", "", ""]

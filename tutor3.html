@@ -9,7 +9,7 @@
     <meta http-equiv="pragma" content="no-cache" />
 
     <!--- BEGIN ****** TUTOR APPLICATION FILE INCLUDES HERE  -->
-    <link rel="stylesheet" href="assets/tutor/tutor.css">
+    <link rel="stylesheet" href="assets/tutor/tutor_2.css">
 
     <!--- *** END *** TUTOR APPLICATION FILE INCLUDES  -->
 
@@ -119,8 +119,18 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#" onclick="chapSel('bg/08', '08 अक्षरब्रह्म योग')">08 अक्षरब्रह्म योग</a></li>
-                                        <li><a href="#" onclick="chapSel('bg/12', '12 भक्ति योग')">12 भक्ति योग</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/02', '02 साङ्ख्य योग:')">02 साङ्ख्य योग:</a></li>  
+                                        <li><a href="#" onclick="chapSel('bg/03', '03 कर्म योग:')">03 कर्म योग:</a></li>       
+                                        <li><a href="#" onclick="chapSel('bg/04', '04 ज्ञान योग:')">04 ज्ञान योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/05', '05 कर्मस्न्न्यास योग:')">05 कर्मस्न्न्यास योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/07', '07 ज्ञानविज्ञान योग:')">07 ज्ञानविज्ञान योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/08', '08 अक्षरपरब्रह्म योगः')" >08 अक्षरपरब्रह्म योगः</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/09', '09 राजविद्याराजगुह्य योगः')" >09 राजविद्याराजगुह्य योगः</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/10', '10 विभूति योग:')">10 विभूति योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/12', '12 भक्ति योग:')">12 भक्ति योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/14', '14 गुणत्रयविभागयोग योग:')">14 गुणत्रयविभागयोग योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/15', '15 पुरुषोत्तमप्राप्ति योग:')">15 पुरुषोत्तमप्राप्ति योग:</a></li>
+                                        <li><a href="#" onclick="chapSel('bg/16', '16 दैवासुरसम्पद्विभाग योग')">16 दैवासुरसम्पद्विभाग योग:</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -184,6 +194,8 @@
                     </div>
 					<div> 
             			<input id="playSpeed" type="number" min="1" onChange="resetSpeed()" max="50" value="1" style="width: 50px;"></input>
+						<input id="playTime" type="text" style="width: 80px;"></input>
+				 		<button type="button" onclick="playClip()" class="btn btn-danger btn-rounded">PLAY</button>
         			</div>
                 </div>
             </div>
@@ -274,7 +286,6 @@
 
     <!-- script src="sp1.js"></script -->
     <script src="assets/tutor/main_sp2.js"></script>
-
     <!--  /////**************** -->
 </body>
 

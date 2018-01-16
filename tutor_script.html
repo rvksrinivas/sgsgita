@@ -75,13 +75,31 @@
     <link href="assets/tutor/nouislider/noUiSlider.10.0.0/nouislider.css" rel="stylesheet">
     <link href="assets/tutor/nouislider/slyde.css" rel="stylesheet">
     <!--  /////************** -->
+<script>
+	.shloka-displayWrapperNew {
+	max-width: 500px !important;	
+	border-top: 1px solid;
+    border-color: #F5F5F5;
+    font-family : inherit;
+    font-size   : 24px !important; 
+    text-align	: left !important;
+	align		: left !important;
+    padding-left: 1px !important;
+	line-height: 20px !important;
+}
 
+.shloka-displayNew {
+ 	text-align	: left !important;
+}
+	
+	
+	</script>
 </head>
 <!--<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">-->
 
 <body>
 
-    <div id="wrapper" style="background: white">
+    <div id="wrapper" style="background: white;text-align	: left !important;">
 
         <div id="tutor" class="text-center" style="background: #ffffff">
             <div class="container">
@@ -140,50 +158,27 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="col-md-3 centered" style="white-space: nowrap;">
-                                <input id="tutorialMode" type="checkbox" checked disabled>
-                                <label for="tutorialMode">Tutorial Mode</label>
-                            </div>
-						</li>
-                        <li>
-							<div class="col-md-1 centered" style="white-space: nowrap;">
-								<input  type="number" value="" id="stLine"  min="0" disabled placeholder="Start">
-								<input type="number" value="" id="endLine" min="0" disabled placeholder="End">
-<!--								<button type="button" onclick="shlokaSelRange()" class="btn btn-danger btn-rounded">GO</button>-->
-							  </div>						
-						</li>
+                        
                         <li>
 							  <div class="col-xs-2" style="white-space: nowrap;">
                                 
                             </div>
                         </li>  
-                        <li>
+                        <li><!--
                             <div class="col-md-2 centered" style="white-space: nowrap;">
-                                <audio controls loop controlsList="nodownload" muteToggle="false" ontimeupdate="tmUpdLsr(this)" onended="handleEndAudio(this)" style="width: 65px; align-content: center;" id="my-audio">
-                                    <source src="" type="audio/mpeg">
-                                    <a href="#" class="nl">
-                                        <img id="plays_btn">
-                                    </a>
+                                <audio controls loop controlsList="nodownload" muted="true" muteToggle="false" ontimeupdate="tmUpdLsr(this)" onended="handleEndAudio(this)" style="width: 0px; align-content: center;" id="my-audio">
                                 </audio>
                             </div>
-                        </li>
-                        <li>
-                            <div class="col-md-1 centered">
-                                <button type="button" class="btn btn-danger btn-rounded">
-                                    <a href="#tutor-help" data-toggle="modal" data-dismiss="modal" class="close-modal"><strong>Help?</strong></a>
-                                </button>
-                            </div>
-                        </li>                        
+                        --></li>                      
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="container text-center" style="background: white; margin-top:30px;">
+        <div class="container text-center" style="background: white; margin-top:30px;text-align	: left !important;">
             <div class="row align-items-center">
                 <div id="tutor-shloka" style="background: #ffffff">
-                        <div id="shloka-displayWrapper" class="shloka-displayWrapper col-md-12" style="background: white">
-                            <div id="shloka-display" class="shloka-display col-md-12" data-spy="scroll">
+                        <div id="shloka-displayWrapper" class="shloka-displayWrapperNew" >
+                            <div id="shloka-display" class="shloka-displayNew"  >
                                 <p>श्री गणेशाय नमः| श्री सरस्वत्त्यै नमः| </p>
                                 <p>श्री पादवल्लभ नृसिंहसरस्वति श्री गुरुदत्तात्रेयाय नमः॥ </p>
                                 <p>Welcome to Bhagavadgeeta Audio Tutorial!</p>
@@ -192,81 +187,16 @@
 								<p>&nbsp;</p>
 								<p>&nbsp;</p>
                             </div>
-                            <div id="tutor-slider" class="col-xs-0" style="margin-top: 10px; margin-bottom: 5%; height: 90%;"></div>
+                           <div id="tutor-slider" class="col-xs-0" style="margin-top: 10px; margin-bottom: 5%; height: 90%;visibility: hidden "></div>
                     </div>
 
                 </div>
             </div>
         </div>
 
-        <footer class="footer-1">
-            <div class="lower">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="text-center">
-                                <span class="small">Copyright &copy; 2017 - BhagavadGita Tutor. All Rights Reserved.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        
 
     </div>
-    
-    
-    
-    
-    
- <div id="tutor-help" class="portfolio-modal modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-<div class="container">
-<div class="row">
-                   
-<section id="tutor-help" class="text-center">
-    <div class="container" >
-        <div class="row text-center">
-            <div class="col-md-12 col-md-offset-0">
-                <h1>Tutorial Help</h1>
-                <hr class="primary">
-            </div>
-        	<div class="row">
-				<div class="col-sm-4 col-sm-offset-2 text-left">
-					<h3>Non Tutorial Mode</h3>
-					<hr>
-					<ol class="list-group">
-						<li class="list-group-item">Select Language</li>
-						<li class="list-group-item">Select Chapter</li>
-						<li class="list-group-item">Click play button</li>
-					</ol>
-				</div>
-				 <div class="col-sm-4 col-sm-offset-2 text-left">
-					<h3>Tutorial Mode</h3>
-					<hr>
-					<ol class="list-group">
-						<li class="list-group-item">Select Language</li>
-						<li class="list-group-item">Select Chapter</li>
-						<li class="list-group-item">Check 'Tutorial Mode' checkbox</li>
-						<li class="list-group-item">Click play button</li>
-					</ol>
-				</div>
-            </div>
-         </div>
-     </div>
-</section>
-                    
-</div>
-</div>
-</div>
-</div>
-
 
     <!-- Core JavaScript Files -->
     <script src="assets/js/jquery-1.10.2.js"></script>
@@ -303,6 +233,7 @@
     <script src="assets/tutor/tutor_sp.js"></script>
 -->
     <!--  /////**************** -->
+
 </body>
 
 </html>

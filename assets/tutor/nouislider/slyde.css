@@ -10,32 +10,39 @@
 
 .noUi-vertical {
   width: 8px;
-  height: 89% !important;
+  height: 87% !important;
   margin-left: 97%;
-  top: 13px;
+  top: 9px;
   left: -5px;
 }
 
 .noUi-connect {
 	background:#F5F5F5;
+	top: 0px !important;
+	
+}
+
+.noUi-draggable {
+	top: -20px !important;
 }
 
 .noUi-handle {
     width: 16px !important;
-    height: 34px;
+    height: 11px !important;
     left: -5px;
-    top: -17px;
+    top: 0px !important;
 	box-shadow: none !important;
 }
 
 .noUi-handle-lower , .noUi-handle:before, .noUi-handle:after{
 	content: none !important;
+	top: -11px !important;
 }
 
 .noUi-tooltip {
     font-size: 15px;
 	color: #2e6da4 !important;
-	left: -60px;
+	left: -80px;
 }
 
 

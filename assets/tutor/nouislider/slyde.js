@@ -40,7 +40,7 @@ function createSlider(startNum, endNum) {
 		animate: true,
 		animationDuration: 300,
 		start: [startNum,  endNum],
-		connect: [false, true, false],
+		connect: [false, false, true],
 		orientation: 'vertical',
 		behaviour: 'drag-tap-snap',
 		step: 1,
@@ -49,7 +49,16 @@ function createSlider(startNum, endNum) {
 			'max': endNum
 		},
 		tooltips: [ true, true],
-		format: wNumb({ decimals: 0 }),
+		format: wNumb({ 
+			decimals: 0 ,
+    		edit: function ( value ) {
+					if(value == startNum)
+							value = 'Start';
+					else if (value == endNum)
+						value = 'End';
+        			return value;
+    			}    
+		}),
 		/*pips: {
 		  mode: 'steps',
 		  values: varValues,
@@ -69,9 +78,11 @@ function createSlider(startNum, endNum) {
 	  if ( handle ) {
 		  _sliderEndPos = value;
 		  _isTop = false;
+		  //updateDefaultEndPos();
 	  } else {
 		  _sliderStartPos = value;
 		  _isTop = true;
+		  //updateDefaultStartPos();  
 	  }
 	  if(_currentChapter != "")
 			gotoShloka(_sliderStartPos, _sliderEndPos, _isTop);
@@ -88,7 +99,9 @@ function range2Array(start, count) {
 function gotoShloka(sliderStartPos, sliderEndPos, _isTop) {
 	// set lower value for shloka range
 	//console.log("GOTO Sloka: " + sliderStartPos + " (& _sliderEndPos = " + sliderEndPos + ")");
-	
+	if(sliderStartPos == "Start") sliderStartPos = 0;
+	if(sliderEndPos == "End") sliderEndPos = _numShlokasInChap;
+		
 	sliderPlayRange(Math.min(sliderStartPos, sliderEndPos), Math.max(sliderStartPos, sliderEndPos), _isTop);
 } 
 

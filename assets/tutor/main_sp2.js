@@ -123,6 +123,12 @@
 	$(document).ready(init);
 
 
+
+
+
+
+
+
     function browserCheck() { 
          if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) 
         {
@@ -143,13 +149,38 @@
         else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true ) || ( (navigator.appName == "Netscape") && 
         (navigator.appVersion.indexOf('Trident') === -1))) //IF IE > 10
         {
-            _whichBrowser = "IE";
+            _whichBrowser = checkIEandEdge();
         }  
         else 
         {
            
         }
     }
+
+	function checkIEandEdge(){
+		var rv = -1; // Return value assumes failure.
+
+		if (navigator.appName == 'Microsoft Internet Explorer'){
+
+		   var ua = navigator.userAgent,
+			   re  = new RegExp("MSIE ([0-9]{1,}[\\.0-9]{0,})");
+
+		   if (re.exec(ua) !== null){
+			 rv = parseFloat( RegExp.$1 );
+		   }
+		}
+		else if(navigator.appName == "Netscape"){                       
+		   /// in IE 11 the navigator.appVersion says 'trident'
+		   /// in Edge the navigator.appVersion does not say trident
+		   if(navigator.appVersion.indexOf('Trident') === -1) rv = 12;
+		   else rv = 11;
+		}       
+		if (rv == 12) {
+			return "Edge";
+		} else {
+			return "IE";
+		}        
+	}
 	
 	function isWindows() {
 	  _isWindows = navigator.platform.indexOf('Win') > -1
@@ -210,7 +241,7 @@
         browserCheck();
         if(_whichBrowser == "Firefox") {
             _fileExt = ".ogg";
-        } else if(_whichBrowser == "IE") {
+        } else if(_whichBrowser == "IE" || _whichBrowser == "Edge") {
             _fileExt = ".mp3";  
         } else {
             _fileExt = ".m4a";
@@ -219,6 +250,12 @@
 			_fileExt = ".m4a";
 		}
 		_tutorialMode = $("#tutorialMode").prop('checked') ;
+		
+		if(_whichBrowser == "IE") {
+			txt2 = "width: 80px !important;";
+			$("#my-audio").attr('style', txt2);
+			
+		}
 	}
 
 	$(window).resize(function() {
@@ -390,6 +427,33 @@ function adjTextforMobile() {
 			resetSpeed();
 			//$('#stLine').prop('disabled', false);
          	//$('#endLine').prop('disabled', false);
+			
+			
+			/////////////////////////////////////
+
+//				var audio = new Audio();
+//				audio.src = _mediaElementRef.src;
+//				audio.controls = true;
+//				audio.autoplay = true;
+//				document.body.appendChild(audio);
+//
+//				var context = new webkitAudioContext();
+//				var analyser = context.createAnalyser();
+//
+//
+//				window.addEventListener('load', function(e) {
+//				  // Our <audio> element will be the audio source.
+//				  var source = context.createMediaElementSource(audio);
+//				  source.connect(analyser);
+//				  analyser.connect(context.destination);
+//				}, false);
+
+
+			////////////////////////////////////
+			
+			
+			
+			
 		} else {
 			$(".shloka-display").html(_defaultText);
 			_mediaElementRef.pause();
@@ -474,7 +538,8 @@ function adjTextforMobile() {
 			var txt = Sanscript.t(secBtnArr[i].innerHTML, "devanagari", _lang);
 			secBtnArr[i].innerHTML = txt;
 		}
-		
+		$('#stLine').val(1);
+        $('#endLine').val(_numShlokasInChap-2);
 	}
 
 
@@ -630,7 +695,7 @@ function adjTextforMobile() {
 		$("#plays_btn").click(function() {
 			if (_playsStatus == "notplaying") {
 				_playsStatus = "playing";
-				if (_chosenBtnArr != null && _chosenBtnArr.length > 0) {
+//				if (_chosenBtnArr != null && _chosenBtnArr.length > 0) {
 					var start = "";
 					var end = "";
 					if (!_tutorFile) {
@@ -638,12 +703,13 @@ function adjTextforMobile() {
 						end = _secDtlsArrDisplay[_chosenBtnArr[_chosenBtnArr.length - 1]].endTime;
 					} else {
 						start = getTimingForText(_secDtlsArrDisplay[_chosenBtnArr[0]].text, "S");
-						end = getTimingForText(_secDtlsArrDisplay[_chosenBtnArr[_chosenBtnArr.length - 1]].text, "E");
+						_mediaElementRef.currentTime = start;
+//						end = getTimingForText(_secDtlsArrDisplay[_chosenBtnArr[_chosenBtnArr.length - 1]].text, "E");
 					}
 					playAudioRanges(start, end);
-				} else {
+//				} else {
 					_mediaElementRef.play();
-				}
+//				}
 				showPause();
 			} else {
 				_mediaElementRef.pause();
@@ -828,8 +894,8 @@ function adjTextforMobile() {
 			_scrollText = false;
 		}
 		
-		$('#stLine').attr('value', _sliderStartingtPos);
-        $('#endLine').attr('value', _sliderEndingPos);
+		$('#stLine').attr('value', getSliderValue(0));
+        $('#endLine').attr('value', getSliderValue(1));
 	}
 
 	function sliderPlayRangePl(slSt, slEnd, isT) {
@@ -943,7 +1009,8 @@ function adjTextforMobile() {
 			var numEntries = shl.entry.length;
 
 			for (j = 0; j < numEntries; j++) {
-				if (shl.entry[j].text.includes(Sanscript.t("उवाच", "devanagari", _lang))) {
+				//if (shl.entry[j].text.includes(Sanscript.t("उवाच", "devanagari", _lang))) {
+				if (shl.entry[j].text.indexOf(Sanscript.t("उवाच", "devanagari", _lang)) > 0) {
 					_uvachaCount++;
 				}
 			}
@@ -961,7 +1028,8 @@ function adjTextforMobile() {
 
 			_startWordPos = _startWordPos + +numEntries;
 			
-			if (shl.entry[numEntries - 1].text.includes('||')) {
+//			if (shl.entry[numEntries - 1].text.includes('||')) {
+			if (shl.entry[numEntries - 1].text.indexOf('||') > 0) {	
 				_nbrOfLineInShloka = 2;
 			} else {
 				_nbrOfLineInShloka = 1;
@@ -1337,8 +1405,10 @@ function adjTextforMobile() {
 		_sliderStartingtPos = _playLine = slSt;
 		_sliderEndingPos = slEnd;
 		
-		$('#stLine').attr('value', _sliderStartingtPos);
-        $('#endLine').attr('value', _sliderEndingPos);
+//		$('#stLine').attr('value', getSliderValue(0));
+//        $('#endLine').attr('value', getSliderValue(1));
+		$('#stLine').val(_sliderStartingtPos);
+		$('#endLine').val(_sliderEndingPos);
 	}
 
 	function getUvachaCountTu(st, en) {
@@ -1348,7 +1418,8 @@ function adjTextforMobile() {
 			var numEntries = shl.entry.length;
 			for (j = 0; j < numEntries; j++) {
 				if (shl.entry[j].teacher == "YS") {
-					if (shl.entry[j].text.includes(Sanscript.t("उवाच", "devanagari", _lang))) {
+//					if (shl.entry[j].text.includes(Sanscript.t("उवाच", "devanagari", _lang))) {
+					if (shl.entry[j].text.indexOf(Sanscript.t("उवाच", "devanagari", _lang)) > 0) {
 						_uvachaCount++;
 					}
 				}
@@ -1460,13 +1531,13 @@ function adjTextforMobile() {
 		for (i = 0; i < _secDtlsArrDisplay.length; i++) {
 			var secDtls = _secDtlsArrDisplay[i];
 			var sty = secDtls.sty;
-
+			var linNbr = secDtls.shlNbr;
 			if ($.trim(secDtls.startTime) == "") {
 				bigStr += "<span>";
 				bigStr += secDtls.text;
 				bigStr += "</span>";
 			} else {
-				bigStr += "<button class=\"secButton " + sty + "\" id=\"" + secId + "\" onclick=\"secBtnPressedTu('" + secId + "', '" + i + "')\">";
+				bigStr += "<button class=\"secButton " + sty + "\" id=\"" + secId + "\" onclick=\"secBtnPressedTu('" + secId + "', '" + linNbr + "')\">";
 				bigStr += secDtls.text;
 				bigStr += "</button> &nbsp;"
 				secId++;
@@ -1500,13 +1571,13 @@ function adjTextforMobile() {
 		for (i = 0; i < _secDtlsArrDisplay.length; i++) {
 			var secDtls = _secDtlsArrDisplay[i];
 			var sty = secDtls.sty;
-
+			var linNbr = secDtls.shlNbr;
 			if ($.trim(secDtls.startTime) == "") {
 				bigStr += "<span>";
 				bigStr += secDtls.text;
 				bigStr += "</span>";
 			} else {
-				bigStr += "<button class=\"secButtonMobile " + sty + "\" id=\"" + secId + "\" onclick=\"secBtnPressedTu('" + secId + "', '" + i + "')\">";
+				bigStr += "<button class=\"secButtonMobile " + sty + "\" id=\"" + secId + "\" onclick=\"secBtnPressedTu('" + secId + "', '" + linNbr + "')\">";
 				bigStr += secDtls.text;
 				bigStr += "</button> &nbsp;"
 				secId++;
@@ -1541,30 +1612,40 @@ function adjTextforMobile() {
 	//     - reset the repeat button status
 	//////////////////////////////////////////////////////////////
 	function secBtnPressedTu(btnId, lineNbr) {
+//		processFurtherSectionClick(btnId);
 		var btnObj = _secRefArr[btnId];
-		if (processFurtherSectionClick(btnId)) {
-			if (btnObj.className == 'secButton') {
-				btnObj.className = 'secButton-pressed'
-			} else {
-				btnObj.className = 'secButton';
-			}
-		}
-
-		if (_chosenBtnArr.length == 0) {
-			setLastKnownRepeatStatus();
-			var shl = _entireChapterData.shloka[_shlokaCntr];
-			var numEntries = shl.entry.length;
-			_startPos = +shl.entry[0].startTime;
-			_endPos = +shl.entry[numEntries - 1].endTime;
-		} else {
-			_mediaElementRef.pause();
-			updateRepeatButtonStatus("repeatOne");
-			_repeatStatus = "repeatOne";
-			_playsStatus = "notplaying";
+//		if (processFurtherSectionClick(btnId)) {
+//			if (btnObj.className == 'secButton') {
+//				btnObj.className = 'secButton-pressed'
+//			} else {
+//				btnObj.className = 'secButton';
+//			}
+//		}
+//
+//		if (_chosenBtnArr.length == 0) {
+//			setLastKnownRepeatStatus();
+//			var shl = _entireChapterData.shloka[_shlokaCntr];
+//			var numEntries = shl.entry.length;
+//			_startPos = +shl.entry[0].startTime;
+//			_endPos = +shl.entry[numEntries - 1].endTime;
+//		} else {
+//			_mediaElementRef.pause();
+//			updateRepeatButtonStatus("repeatOne");
+//			_repeatStatus = "repeatOne";
+//			_playsStatus = "notplaying";
 			//getTimingForText(btnObj.textContent, "");
-			showPlay();
-			$("#plays_btn").click();
+//			showPlay();
+//			$("#plays_btn").click();
+			
+//		}
+		if(lineNbr < getSliderValue(1)) {
+			start = getTimingForText(_secDtlsArrDisplay[btnId].text, "S");
+			playAudioRangesTu(start, 0);
+			_shlokaCntr = +lineNbr;
+			updateSlider(_shlokaCntr, _sliderEndPos);
+			getShlokaStartTmAndWrdCntTu(lineNbr);
 		}
+		
 	}
 
 	function getTimingForText(txt, whichpnt) {
@@ -1715,7 +1796,8 @@ function adjTextforMobile() {
 				_currJump = shl.entry[_shlokaLine].jump;
 				jsonTeacher = shl.entry[_shlokaLine].teacher;
 				jsonText = shl.entry[_shlokaLine].text;
-				if (jsonTeacher.includes("Y")) {
+//				if (jsonTeacher.includes("Y")) {
+				if (jsonTeacher.indexOf("Y") >= 0) {
 					_teacher = true;
 					_student = false;
 				} else {
@@ -1823,7 +1905,7 @@ function adjTextforMobile() {
 
 	function playAudioRangesTu(start, end) {
 		_startPos = +start;
-		_endPos = +end;
+//		_endPos = +end;
 		_mediaElementRef.currentTime = _startPos;
 		_curTime = _startPos;
 		_mediaElementRef.play();

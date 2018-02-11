@@ -39,7 +39,7 @@ function createSlider(startNum, endNum) {
 	noUiSlider.create(tooltipSlider, {
 		animate: true,
 		animationDuration: 300,
-		start: [startNum,  endNum],
+		start: [startNum+1,  endNum-1],
 		connect: [false, false, true],
 		orientation: 'vertical',
 		behaviour: 'drag-tap-snap',
@@ -53,9 +53,9 @@ function createSlider(startNum, endNum) {
 			decimals: 0 ,
     		edit: function ( value ) {
 					if(value == startNum)
-							value = 'Start';
+							value = '';
 					else if (value == endNum)
-						value = 'End';
+						value = '';
         			return value;
     			}    
 		}),
@@ -99,8 +99,8 @@ function range2Array(start, count) {
 function gotoShloka(sliderStartPos, sliderEndPos, _isTop) {
 	// set lower value for shloka range
 	//console.log("GOTO Sloka: " + sliderStartPos + " (& _sliderEndPos = " + sliderEndPos + ")");
-	if(sliderStartPos == "Start") sliderStartPos = 0;
-	if(sliderEndPos == "End") sliderEndPos = _numShlokasInChap;
+//	if(sliderStartPos == "Start") sliderStartPos = 0;
+//	if(sliderEndPos == "End") sliderEndPos = _numShlokasInChap;
 		
 	sliderPlayRange(Math.min(sliderStartPos, sliderEndPos), Math.max(sliderStartPos, sliderEndPos), _isTop);
 } 
